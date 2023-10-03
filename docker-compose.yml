@@ -1,11 +1,9 @@
-version: '3'
-
 networks:
   laravel:
 
-
 services:
   app:
+    env_file: .env
     build:
       context: ./dockerfiles
       dockerfile: nginx.dockerfile
@@ -39,8 +37,11 @@ services:
       SERVICE_NAME: mysql
     networks:
       - laravel
+    volumes:
+      - ./mysql:/var/lib/mysql
 
   php:
+    env_file: .env
     build:
       context: ./dockerfiles
       dockerfile: php.dockerfile
@@ -63,6 +64,7 @@ services:
       - laravel
 
   composer:
+    env_file: .env
     build:
       context: ./dockerfiles
       dockerfile: php.dockerfile
@@ -91,6 +93,7 @@ services:
       - laravel
 
   artisan:
+    env_file: .env
     build:
       context: ./dockerfiles
       dockerfile: php.dockerfile
